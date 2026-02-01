@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my valentine?</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffc6d9;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden; /* so No never creates scrollbars */
+    }
+    .card {
+      background: #ffeef4;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      text-align: center;
+      max-width: 320px;
+    }
+    .emoji {
+      font-size: 60px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 20px;
+      margin: 10px 0 20px 0;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 10px;
+      position: relative;
+    }
+    button {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    /* Make Yes subtle */
+    #yesBtn {
+      background: transparent;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+    /* Make No very attractive */
+    #noBtn {
+      background: #ff4f7b;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      position: fixed;            /* relative to whole screen */
+      z-index: 10;
+    }
+    #result {
+      display: none;
+    }
+    #result h2 {
+      margin-top: 10px;
+      font-size: 22px;
+    }
+    #gif {
+      margin-top: 15px;
+      max-width: 100%;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="question">
+    <div class="emoji">🐻💗</div>
+    <h1>Aishuuu🌍, will you be my valentine?</h1>
+    <div class="buttons">
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
+    </div>
+  </div>
+
+  <div class="card" id="result">
+    <div class="emoji">🐻💗</div>
+    <h1>Aishuuu🌍, will you be my valentine?</h1>
+    <h2>YAYYY! 🎉</h2>
+    <img id="gif" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExczloZXRqMWtuNzgzbWw4cnAzZmc5bjdtc3BrNWFtOTY4YWJmY2EzdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GxIdtANXpn3qL1FG25/giphy.gif" alt="Yay gif" />
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const question = document.getElementById("question");
+    const result = document.getElementById("result");
+
+    // place No initially next to Yes
+    window.addEventListener("load", () => {
+      const yesRect = yesBtn.getBoundingClientRect();
+      noBtn.style.left = yesRect.right + 16 + "px";
+      noBtn.style.top = yesRect.top + "px";
+    });
+
+    function moveButton(e) {
+      const btnRect = noBtn.getBoundingClientRect();
+      const padding = 10;
+      const maxX = window.innerWidth - btnRect.width - padding;
+      const maxY = window.innerHeight - btnRect.height - padding;
+
+      const randX = Math.random() * maxX + padding;
+      const randY = Math.random() * maxY + padding;
+
+      noBtn.style.left = randX + "px";
+      noBtn.style.top = randY + "px";
+
+      if (e) e.preventDefault();
+    }
+
+    noBtn.addEventListener("mouseover", moveButton);
+    noBtn.addEventListener("touchstart", moveButton);
+
+    yesBtn.addEventListener("click", () => {
+      question.style.display = "none";
+      result.style.display = "block";
+      noBtn.style.display = "none";
+    });
+  </script>
+</body>
+</html>
